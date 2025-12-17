@@ -37,32 +37,19 @@ namespace Paradigm.Server
                     webBuilder
                         .ConfigureAppConfiguration((context, config) =>
                         {
-                            // Clear default configuration and use your custom configuration
                             config.Sources.Clear();
                             config.AddConfiguration(Configuration);
                         })
                         .ConfigureLogging(factory =>
                         {
-                            //factory.ClearProviders(); // Clear default providers
                             if (logging.GetSection("Debug").Exists())
                                 factory.AddConsole();
                             if (logging.GetSection("Console").Exists())
                                 factory.AddDebug();
                         })
-                        .UseKestrel(options =>
-                        {
-                            // Explicitly disable Kestrel configuration from appsettings
-                            options.Configure(Configuration.GetSection("Kestrel"), reloadOnChange: false)
-                                   .Endpoint("HTTPS", endpointOptions => 
-                                   {
-                                       // This will be overridden by UseUrls
-                                   });
-                        })
+                        .UseKestrel()
                         .UseContentRoot(root)
-                        .UseStartup<Startup>()
-                        .UseUrls("https://localhost:5000")
-                        .SuppressStatusMessages(true); // Suppress some default messages
-                        //.UseUrls("http://115.0.9.161:5000");
+                        .UseStartup<Startup>();
                 });
         }
     }
