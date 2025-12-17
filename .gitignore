@@ -1,0 +1,12 @@
+common/obj
+common/bin
+data/obj
+data/bin
+contract/obj
+contract/bin
+server/obj
+server/bin
+services/obj
+services/bin
+.vscode/tasks.json
+.vscode/launch.json
