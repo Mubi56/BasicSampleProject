@@ -5,9 +5,8 @@
   },
   "kestrel": {
     "endpoints": {
-      "localhost": {
-        "address": "localhost",
-        "port": 5000
+      "Https": {
+        "Url": "https://localhost:5000"
       }
     }
   },
@@ -52,16 +51,31 @@
     "IncludeScopes": true,
     "Debug": {
       "LogLevel": {
-        "Default": "Information"
+        "Default": "Debug",
+        "Microsoft": "Information",
+        "Microsoft.Hosting.Lifetime": "Information",
+        "Microsoft.AspNetCore": "Information",
+        "Microsoft.EntityFrameworkCore.Database.Command": "Information",
+        "Microsoft.EntityFrameworkCore": "Information"
       }
     },
     "Console": {
       "LogLevel": {
-        "Default": "Information"
+        "Default": "Debug",
+        "Microsoft": "Information",
+        "Microsoft.Hosting.Lifetime": "Information",
+        "Microsoft.AspNetCore": "Information",
+        "Microsoft.EntityFrameworkCore.Database.Command": "Information",
+        "Microsoft.EntityFrameworkCore": "Information"
       }
     },
     "LogLevel": {
-      "Default": "Information"
+      "Default": "Debug",
+      "Microsoft": "Information",
+      "Microsoft.Hosting.Lifetime": "Information",
+      "Microsoft.AspNetCore": "Information",
+      "Microsoft.EntityFrameworkCore.Database.Command": "Information",
+      "Microsoft.EntityFrameworkCore": "Information"
     }
   },
   "OTP": {
