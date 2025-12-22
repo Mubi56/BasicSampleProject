@@ -210,6 +210,12 @@ namespace Paradigm.Server.Application
                 return _response;
             }
         }
-
+        public async Task SendTestEmail()
+        {
+            var subject = "Test Email";
+            var body = "This is a test email sent from the EmailService.";
+            var response = await SendEmailUsingSendGrid("mubashariqbalkhan1@gmail.com", subject, body);
+            Console.WriteLine($"Test Email Send Status: {response.Message}");
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace Paradigm.Server.Interface
         Task<IResponse> SendEmailUsingSendGrid(string toEmail, string subject, string body);
         Task<IResponse> ForgotPassword(ForgotPassword forgotPassword, int type);
         Task<IResponse> ResetPassword(ResetPassword resetPassword);
+        Task SendTestEmail();
     }
 }

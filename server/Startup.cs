@@ -21,6 +21,7 @@ namespace Paradigm.Server
     using Hangfire;
     using Hangfire.PostgreSql;
     using Hangfire.Dashboard;
+    using Paradigm.Server.Jobs;
 
     public partial class Startup
     {
@@ -52,6 +53,7 @@ namespace Paradigm.Server
                     dbContext.EnsureSeedData(crypto);
                 }
             }
+            JobScheduler.RegisterJobs(app.ApplicationServices);
         }
 
         // Changed return type from IServiceProvider to void

@@ -13,6 +13,7 @@ namespace Paradigm.Server
     using Paradigm.Contract.Interface;
     using Paradigm.Service.Localization;
     using Paradigm.Server.Application;
+    using Paradigm.Service;
 
     internal class ContainerRegistry : Registry
     {
@@ -35,6 +36,7 @@ namespace Paradigm.Server
             For<IRoleService>().Use<RoleService>();
             For<IStaticDataService>().Use<StaticDataService>();
             For<IEmailService>().Use<EmailService>();
+            For<ISyncService>().Use<SyncService>();
 
 
             For<IConfiguration>().Use(WebApp.Configuration).Singleton();
