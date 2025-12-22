@@ -18,6 +18,9 @@ namespace Paradigm.Server
     using Paradigm.Common;
     using Paradigm.Contract.Interface;
     using Microsoft.EntityFrameworkCore.Diagnostics;
+    using Hangfire;
+    using Hangfire.PostgreSql;
+    using Hangfire.Dashboard;
 
     public partial class Startup
     {
@@ -30,6 +33,10 @@ namespace Paradigm.Server
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Paradigm"));
             }
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions
+            {
+                Authorization = new[] { new AllowAllAuthorizationFilter() }
+            });
             app.UseConfigurationMiddleware();
 
             app.UseAntiforgeryMiddleware(config.Server.AntiForgery.ClientName);
@@ -53,7 +60,7 @@ namespace Paradigm.Server
             services.AddOptions();
             services.AddSystemConfiguration();
             services.AddConfigureAuthentication(config.Service.TokenProvider, new string[] { "admin" });
-            
+
             var securityReq = new OpenApiSecurityRequirement()
             {
                 {
@@ -79,7 +86,7 @@ namespace Paradigm.Server
                     Contact = new OpenApiContact()
                     {
                         Name = "Mubashar Iqbal",
-                        Email = "mubashar.iqbal@khazanapk.com"
+                        Email = "mubashariqbalkhan1@gmail.com"
                     }
                 });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
@@ -114,8 +121,24 @@ namespace Paradigm.Server
                             .AllowAnyMethod();
                     });
             });
+            services.AddHangfire(config =>
+            {
+                config.UsePostgreSqlStorage(
+                    options =>
+                    {
+                        options.UseNpgsqlConnection(
+                            WebApp.Configuration["data:connectionString"]
+                        );
+                    },
+                    new PostgreSqlStorageOptions
+                    {
+                        SchemaName = "hangfire",
+                        PrepareSchemaIfNecessary = true
+                    });
+            });
 
-            // StructureMap registries are now handled in Program.cs via UseServiceProviderFactory
+            services.AddHangfireServer();
+
         }
 
         // This method is called by StructureMapServiceProviderFactory
@@ -124,5 +147,10 @@ namespace Paradigm.Server
             // Additional StructureMap configuration can go here if needed
             // The registries are already added in the factory
         }
+    }
+
+    public class AllowAllAuthorizationFilter : IDashboardAuthorizationFilter
+    {
+        public bool Authorize(DashboardContext context) => true;
     }
 }

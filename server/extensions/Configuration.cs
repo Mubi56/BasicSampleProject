@@ -5,8 +5,8 @@
     using System.Text;
     using System.IO.Compression;
     using System.Threading.Tasks;
-    using System.Text.RegularExpressions;    
-    
+    using System.Text.RegularExpressions;
+
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Builder;
@@ -19,7 +19,7 @@
 
     using Microsoft.IdentityModel.Tokens;
 
-    using Microsoft.Extensions.Options;    
+    using Microsoft.Extensions.Options;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -30,7 +30,8 @@
     using Paradigm.Service;
     using Paradigm.Server.Model;
     using Paradigm.Server.Formatter;
-    using Paradigm.Server.Resolver;    
+    using Paradigm.Server.Resolver;
+    using Hangfire;
 
     public static partial class Extensions
     {
@@ -50,9 +51,10 @@
 
             builder.AddJsonFile($"app.settings.json", optional: true);
             builder.AddJsonFile($"app.{env}.json", optional: false);
+            Console.WriteLine($"INFO: Using configuration file 'app.{env}.json'");
 
             return builder;
-        }        
+        }
 
         public static void AddSystemConfiguration(this IServiceCollection services)
         {
@@ -137,7 +139,8 @@
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy(Security.AuthorizeClaimAttribute.PolicyName, o => {
+                options.AddPolicy(Security.AuthorizeClaimAttribute.PolicyName, o =>
+                {
                     o.RequireAssertion(Security.AuthorizeClaimAttribute.PolicyHandler);
                 });
             });

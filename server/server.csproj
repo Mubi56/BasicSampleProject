@@ -11,6 +11,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Hangfire.Core" Version="1.8.14" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.8.14" />
+    <PackageReference Include="Hangfire.PostgreSql" Version="1.20.9" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
     <PackageReference Include="SendGrid" Version="9.29.3" />
     <PackageReference Include="StructureMap.Microsoft.DependencyInjection" Version="2.0.0" />
@@ -27,7 +30,7 @@
     <PackageReference Include="Wangkanai.Detection" Version="5.2.1" />
 
     <Content Update="*.json;wwwroot/**/*;resources/**/*.*;" CopyToPublishDirectory="Never" />
-    <ResourceFiles Include="resources/**/*.*" />  
+    <ResourceFiles Include="resources/**/*.*" />
   </ItemGroup>
 
   <Target Name="SyncFolders" AfterTargets="AfterPublish" Condition="'$(Configuration)' == 'Release'">
